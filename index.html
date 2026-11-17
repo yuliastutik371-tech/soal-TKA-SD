@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uji Coba TKA 2027 - UPT SD Negeri Ngarum</title>
+<style>
+@font-face{font-family:"Arial Nova Cond";src:local("Arial Nova Cond"),local("Arial Nova Cond Light")}
+:root{--navy:#16345c;--blue:#2463a6;--sky:#eaf4ff;--green:#198754;--orange:#f2a900;--red:#c0392b;--ink:#243247}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#eaf4ff,#f7fbff 50%,#e9f7ef);font-family:"Arial Nova Cond",Arial,sans-serif;color:var(--ink);font-size:16px;min-height:100vh}
+button,input{font:inherit}
+.wrap{max-width:1080px;margin:28px auto;padding:0 18px}
+.panel{background:#fff;border:1px solid #dbe7f3;border-radius:20px;box-shadow:0 12px 35px #1c47751a;padding:28px}
+.center{text-align:center}
+.school-logo{width:92px;height:92px;border-radius:50%;margin:0 auto 14px;background:linear-gradient(145deg,#1d5b9e,#4da2cf);border:5px solid #f3c84b;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;text-align:center;line-height:1.1;box-shadow:0 5px 14px #16345c33}
+h1{font-size:clamp(22px,4vw,34px);line-height:1.25;color:var(--navy);margin:8px 0}
+.school{font-size:clamp(18px,3vw,24px);font-weight:bold;letter-spacing:1px;color:#28744f;margin:8px 0}
+.year{font-size:21px;font-weight:bold;color:#c17d00;margin:6px 0 24px}
+.form-grid{max-width:520px;margin:20px auto 0;text-align:left}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input{width:100%;padding:13px 14px;border:1px solid #c7d6e6;border-radius:10px;outline:none}
+input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2463a61c}
+.btn{border:0;border-radius:11px;padding:12px 20px;font-weight:bold;cursor:pointer;transition:.15s}
+.btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:#174b83}
+.btn-light{background:#eaf1f8;color:var(--navy)}.btn-warn{background:#fff1d1;color:#875800}
+.btn-green{background:var(--green);color:white}
+.error{display:none;color:var(--red);font-weight:bold;margin:12px 0}
+.credit{position:fixed;right:20px;bottom:12px;font-size:13px;color:#53677d}
+.hidden{display:none!important}
+.modal-backdrop{position:fixed;inset:0;background:#10243dcc;display:flex;align-items:center;justify-content:center;padding:18px;z-index:10}
+.modal{width:min(620px,100%);background:#fff;border-radius:18px;padding:26px;box-shadow:0 20px 60px #0004}
+.modal h2{margin:0 0 12px;color:var(--navy)}
+.identity{background:#f0f6fc;border-radius:12px;padding:12px 16px;margin:14px 0}
+.instructions{line-height:1.65;padding-left:22px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.timer{background:#fff4d8;border:1px solid #f1d48a;color:#805900;padding:10px 15px;border-radius:12px;font-weight:bold;font-size:18px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:18px}
+.question-card{background:#fff;border:1px solid #dbe7f3;border-radius:16px;padding:24px;min-height:490px;box-shadow:0 8px 24px #1c477511}
+.qnum{font-size:13px;color:#64778d;font-weight:bold;text-transform:uppercase;letter-spacing:.6px}
+.stimulus{font-family:Arial,sans-serif;font-size:11pt;line-height:1.55;background:#f7faff;border-left:4px solid #4c8bc7;padding:16px;border-radius:8px;margin:12px 0 18px}
+.stimulus h3{font-size:14pt;margin:0 0 10px;color:#173d68}
+.stimulus p{margin:0 0 9px}
+.source{font:italic 8pt Arial,sans-serif;color:#52677e;margin-top:8px}
+.source a{color:#1769aa}
+.prompt{font:11pt Arial,sans-serif;font-weight:bold;line-height:1.5;margin:15px 0}
+.hint{font:11pt Arial,sans-serif;color:#5d6c7c;margin:8px 0}
+.options{display:grid;gap:10px;margin-top:15px}
+.option{display:flex;gap:12px;align-items:flex-start;border:1px solid #d7e1ec;border-radius:12px;padding:12px 14px;cursor:pointer;font:11pt Arial,sans-serif;line-height:1.45;background:#fff}
+.option:hover{border-color:#7ca9d5;background:#f7fbff}
+.option.selected{border-color:var(--blue);background:#eaf4ff}
+.mark{width:28px;height:28px;flex:0 0 28px;border:2px solid #8ba0b7;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold}
+.single .mark{border-radius:50%}.multi .mark{border-radius:6px}
+.selected .mark{background:var(--blue);border-color:var(--blue)}
+.category-table{width:100%;border-collapse:collapse;font:11pt Arial,sans-serif;margin-top:15px}
+.category-table th,.category-table td{border:1px solid #cad7e5;padding:11px 9px;text-align:left;vertical-align:middle}
+.category-table th{background:#eaf2fb;color:#173d68}
+.category-table td.choice{text-align:center;width:74px}
+.category-table input{width:19px;height:19px;accent-color:var(--blue);cursor:pointer}
+.nav-card{background:#fff;border:1px solid #dbe7f3;border-radius:16px;padding:17px;height:max-content}
+.nav-card h3{margin:0 0 13px;color:var(--navy)}
+.nav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.nav-btn{border:0;border-radius:9px;padding:11px 0;background:#e9eef4;color:#35485d;font-weight:bold;cursor:pointer}
+.nav-btn.current{background:#2463a6;color:white;outline:3px solid #b8d5f2}
+.nav-btn.done{background:#198754;color:white}
+.nav-btn.flagged{box-shadow:inset 0 0 0 2px #f0ad22}
+.legend{font-size:12px;line-height:1.8;margin-top:14px;color:#5c6d7e}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:20px}
+.actions-right{display:flex;gap:9px;flex-wrap:wrap}
+.progress{height:8px;background:#e8eef5;border-radius:20px;overflow:hidden;margin:0 0 18px}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,#2463a6,#43a879);width:0}
+.result{max-width:650px;margin:8vh auto;text-align:center}
+.score{font-size:56px;font-weight:bold;color:#198754;margin:18px 0}
+.small{font-size:13px;color:#65758a}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.nav-card{order:-1}.nav-grid{grid-template-columns:repeat(3,1fr)}.question-card{padding:17px}.credit{position:static;text-align:right;padding:14px}.panel{padding:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section id="start" class="panel center">
+    <div class="school-logo" aria-label="Tempat logo sekolah">LOGO<br>SEKOLAH</div>
+    <h1>UJI COBA TES KEMAMPUAN AKADEMIK (TKA)</h1>
+    <div class="school">UPT SD NEGERI NGARUM</div>
+    <div class="year">TAHUN 2027</div>
+    <div class="form-grid">
+      <label for="nama">Nama Peserta</label><input id="nama" autocomplete="name" placeholder="Masukkan nama lengkap">
+      <label for="nisn">NISN</label><input id="nisn" inputmode="numeric" placeholder="Masukkan NISN">
+      <label for="token">Token Ujian</label><input id="token" autocomplete="off" placeholder="Masukkan token">
+      <div id="error" class="error">Maaf, token yang Anda masukkan salah. Silakan ulangi Kembali.</div>
+      <button class="btn btn-primary" style="width:100%;margin-top:18px" onclick="validateIdentity()">MASUK UJIAN</button>
+    </div>
+  </section>
+
+  <section id="exam" class="hidden">
+    <div class="topbar">
+      <div><strong>UJI COBA TKA 2027</strong><div class="small" id="candidate"></div></div>
+      <div class="timer">Waktu tersisa: <span id="clock">15:00</span></div>
+    </div>
+    <div class="progress"><span id="progress"></span></div>
+    <div class="layout">
+      <main class="question-card">
+        <div id="questionContent"></div>
+        <div class="actions">
+          <button class="btn btn-light" onclick="skipQuestion()">Lewati</button>
+          <div class="actions-right">
+            <button class="btn btn-warn" id="doubtBtn" onclick="toggleDoubt()">Ragu-ragu</button>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Berikutnya</button>
+            <button class="btn btn-green hidden" id="finishBtn" onclick="finishExam(false)">Selesai</button>
+          </div>
+        </div>
+      </main>
+      <aside class="nav-card">
+        <h3>Nomor Soal</h3>
+        <div class="nav-grid" id="navGrid"></div>
+        <div class="legend">
+          <div><span class="dot" style="background:#198754"></span>Sudah dikerjakan</div>
+          <div><span class="dot" style="background:#2463a6"></span>Halaman dibuka</div>
+          <div><span class="dot" style="background:#e9eef4;border:1px solid #aebdcb"></span>Belum dikerjakan</div>
+          <div><span class="dot" style="background:#f0ad22"></span>Ditandai ragu-ragu</div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="result" class="panel result hidden">
+    <div style="font-size:48px">🎉</div>
+    <h1>Selamat!</h1>
+    <p>Anda telah menyelesaikan Uji Coba Tes Kemampuan Akademik (TKA).</p>
+    <p>Nilai yang Anda dapatkan adalah</p>
+    <div class="score" id="score">0,00</div>
+    <p id="resultName"></p>
+    <p class="small">Terima kasih telah mengikuti ujian. Tetap semangat belajar!</p>
+    <button class="btn btn-primary" onclick="window.print()">Cetak Hasil</button>
+  </section>
+</div>
+<div class="credit">Dibuat oleh: Yuli Astutik</div>
+
+<div id="instructionModal" class="modal-backdrop hidden">
+  <div class="modal">
+    <h2>Konfirmasi Identitas Peserta</h2>
+    <div class="identity" id="identitySummary"></div>
+    <h3>Petunjuk Pengerjaan</h3>
+    <ol class="instructions">
+      <li>Soal terdiri dari 3 butir soal dengan waktu mengerjakan maksimal 15 menit.</li>
+      <li>Periksa kembali jawaban Anda. Pastikan Anda menjawab dengan benar.</li>
+    </ol>
+    <p><strong>Selamat mengerjakan!</strong></p>
+    <button class="btn btn-primary" style="width:100%" onclick="beginExam()">Saya Mengerti, Saya Siap Mengerjakan</button>
+  </div>
+</div>
+
+<script>
+const TOKEN="YA3RRR";
+const questions=[
+{type:"single",title:"Soal 1",stimulus:`<h3>Candi Borobudur: Keajaiban Warisan Budaya Kebanggaan Indonesia</h3>
+<p>Candi Borobudur merupakan wisata bersejarah Indonesia. Candi ini terletak di Magelang, Jawa Tengah. Bangunan megah ini bercorak agama Buddha. Borobudur dibangun pada masa Dinasti Syailendra. Pembangunannya berlangsung sekitar abad kedelapan.</p>
+<p>Candi ini memiliki susunan sangat unik. Bangunannya terdiri atas beberapa tingkat. Bagian bawah berbentuk teras persegi. Bagian atas memiliki teras melingkar. Puncaknya dihiasi sebuah stupa utama. Stupa merupakan bangunan suci Buddha.</p>
+<p>Dinding candi dihiasi banyak relief. Relief adalah ukiran pada dinding. Ukiran tersebut menggambarkan berbagai kisah kehidupan. Borobudur memiliki ribuan panel relief. Candi ini juga memiliki arca Buddha. Jumlah arca Buddha mencapai lima ratus empat. Tujuh puluh dua stupa mengelilingi teras atas.</p>
+<p>Pengunjung dapat mengamati keindahan arsitektur candi. Arsitektur berarti seni merancang bangunan. Pada tahun 1814, Borobudur ditemukan kembali. Raffles menerima laporan tentang Borobudur. Ia menugaskan H.C. Cornelius membersihkan kawasan. Pemugaran besar berlangsung tahun 1907–1911. Indonesia dan UNESCO memugar Borobudur. Pada tahun 1991, Borobudur menjadi Warisan Dunia.</p>
+<p>Pengakuan tersebut menunjukkan nilai sejarahnya. Candi ini menjadi kebanggaan bangsa Indonesia. Pengunjung harus menjaga kebersihan lingkungan. Kita perlu menghormati peninggalan sejarah. Warisan budaya harus dijaga bersama.</p>`,
+prompt:"Kata manakah yang termasuk kosakata khusus dalam bidang pariwisata dan bangunan bersejarah berdasarkan teks tersebut?",
+options:["Pengunjung, lingkungan, kebersihan, kehidupan.","Relief, stupa, arca, pemugaran.","Bangunan, kawasan, laporan, peninggalan.","Kebanggaan, keindahan, sejarah, kebersamaan."],answer:[1]},
+{type:"multi",title:"Soal 2",stimulus:`<h3>Candi Borobudur: Keajaiban Warisan Budaya Kebanggaan Indonesia</h3>
+<p>Candi Borobudur merupakan wisata bersejarah Indonesia. Candi ini terletak di Magelang, Jawa Tengah. Bangunan megah ini bercorak agama Buddha. Borobudur dibangun pada masa Dinasti Syailendra. Pembangunannya berlangsung sekitar abad kedelapan.</p>
+<p>Candi ini memiliki susunan sangat unik. Bangunannya terdiri atas beberapa tingkat. Bagian bawah berbentuk teras persegi. Bagian atas memiliki teras melingkar. Puncaknya dihiasi sebuah stupa utama. Stupa merupakan bangunan suci Buddha.</p>
+<p>Dinding candi dihiasi banyak relief. Relief adalah ukiran pada dinding. Ukiran tersebut menggambarkan berbagai kisah kehidupan. Borobudur memiliki ribuan panel relief. Candi ini juga memiliki arca Buddha. Jumlah arca Buddha mencapai lima ratus empat. Tujuh puluh dua stupa mengelilingi teras atas.</p>
+<p>Pengunjung dapat mengamati keindahan arsitektur candi. Arsitektur berarti seni merancang bangunan. Pada tahun 1814, Borobudur ditemukan kembali. Raffles menerima laporan tentang Borobudur. Ia menugaskan H.C. Cornelius membersihkan kawasan. Pemugaran besar berlangsung tahun 1907–1911. Indonesia dan UNESCO memugar Borobudur. Pada tahun 1991, Borobudur menjadi Warisan Dunia.</p>
+<p>Pengakuan tersebut menunjukkan nilai sejarahnya. Candi ini menjadi kebanggaan bangsa Indonesia. Pengunjung harus menjaga kebersihan lingkungan. Kita perlu menghormati peninggalan sejarah. Warisan budaya harus dijaga bersama.</p>`,
+prompt:"Berdasarkan informasi pada paragraf ketiga, manakah dua pernyataan yang benar mengenai relief dan arca di Candi Borobudur?",
+hint:"Petunjuk: Pilihlah lebih dari satu jawaban yang benar!",
+options:["Candi Borobudur memiliki ribuan panel relief yang menggambarkan berbagai kisah kehidupan.","Jumlah arca Buddha di Candi Borobudur mencapai 504 buah dan menghiasi seluruh dinding candi.","Candi Borobudur memiliki 504 arca Buddha dan 72 stupa yang mengelilingi teras atas."],answer:[0,2]},
+{type:"category",title:"Soal 3",stimulus:`<h3>Candi Borobudur: Warisan Budaya yang Harus Dilestarikan</h3>
+<p>Candi Borobudur merupakan salah satu peninggalan sejarah yang sangat berharga bagi bangsa Indonesia. Candi ini terletak di Kabupaten Magelang, Jawa Tengah. Bangunan bercorak Buddha tersebut dibangun pada masa Dinasti Syailendra sekitar abad kedelapan. Keindahan bangunannya terlihat dari susunan batu yang membentuk teras bertingkat dan stupa di bagian puncaknya.</p>
+<p>Dinding Candi Borobudur dihiasi ribuan panel relief yang menggambarkan berbagai kisah kehidupan. Selain itu, terdapat ratusan arca Buddha dan puluhan stupa yang menambah keunikan bangunan tersebut. Keindahan relief dan arsitekturnya menarik perhatian wisatawan dari berbagai daerah maupun negara.</p>
+<p>Candi Borobudur tidak hanya menjadi tempat wisata, tetapi juga sumber pengetahuan tentang sejarah dan kebudayaan masa lampau. Banyak pengunjung datang untuk mempelajari nilai-nilai kehidupan yang terdapat dalam reliefnya. Oleh karena itu, setiap pengunjung perlu menjaga kebersihan, tidak merusak bagian bangunan, serta mematuhi aturan yang berlaku.</p>
+<p>Melestarikan Candi Borobudur merupakan tanggung jawab bersama. Generasi muda juga perlu mengenal dan menghargai peninggalan sejarah agar warisan budaya Indonesia tetap terjaga dan dapat dinikmati oleh generasi berikutnya.</p>`,
+prompt:"Berdasarkan teks tersebut, tentukan Benar atau Salah untuk setiap pernyataan berikut yang berkaitan dengan amanat atau pesan yang ingin disampaikan penulis melalui teks!",
+statements:["Setiap generasi perlu menjaga dan melestarikan peninggalan sejarah agar tetap dapat dinikmati pada masa mendatang.","Peninggalan sejarah cukup dimanfaatkan sebagai tempat wisata tanpa perlu memperhatikan kebersihan dan kelestariannya.","Mengenal dan menghargai warisan budaya merupakan salah satu cara menumbuhkan kepedulian terhadap sejarah bangsa."],answer:[true,false,true]}
+];
+let answers=[null,null,null],doubts=[false,false,false],current=0,seconds=900,clockInterval=null,person={};
+function validateIdentity(){
+ const nama=document.getElementById("nama").value.trim(),nisn=document.getElementById("nisn").value.trim(),token=document.getElementById("token").value.trim();
+ const err=document.getElementById("error");
+ if(token!==TOKEN){err.style.display="block";return}
+ err.style.display="none";
+ if(!nama||!nisn){alert("Nama dan NISN harus diisi terlebih dahulu.");return}
+ person={nama,nisn};
+ document.getElementById("identitySummary").innerHTML=`<strong>Nama:</strong> ${escapeHtml(nama)}<br><strong>NISN:</strong> ${escapeHtml(nisn)}`;
+ document.getElementById("instructionModal").classList.remove("hidden");
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function beginExam(){
+ document.getElementById("instructionModal").classList.add("hidden");
+ document.getElementById("start").classList.add("hidden");document.getElementById("exam").classList.remove("hidden");
+ document.getElementById("candidate").textContent=person.nama+" • NISN "+person.nisn;
+ renderNav();renderQuestion();startTimer();
+}
+function startTimer(){updateClock();clockInterval=setInterval(()=>{seconds--;updateClock();if(seconds<=0)finishExam(true)},1000)}
+function updateClock(){let m=Math.floor(seconds/60),s=seconds%60;document.getElementById("clock").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}
+function renderNav(){
+ const nav=document.getElementById("navGrid");nav.innerHTML="";
+ questions.forEach((q,i)=>{let b=document.createElement("button");b.className="nav-btn";b.textContent=i+1;
+ if(isAnswered(i))b.classList.add("done");if(i===current)b.classList.add("current");if(doubts[i])b.classList.add("flagged");
+ b.onclick=()=>{current=i;renderNav();renderQuestion()};nav.appendChild(b)});
+ document.getElementById("progress").style.width=(answers.filter((a,i)=>isAnswered(i)).length/3*100)+"%";
+}
+function isAnswered(i){
+ if(answers[i]===null)return false;
+ if(questions[i].type==="category")return Array.isArray(answers[i])&&answers[i].length===3&&answers[i].every(v=>v!==null);
+ return Array.isArray(answers[i])?answers[i].length>0:true;
+}
+function renderQuestion(){
+ const q=questions[current],root=document.getElementById("questionContent");
+ let html=`<div class="qnum">${q.title} dari 3</div><div class="stimulus">${q.stimulus}<div class="source">Sumber: Teks bacaan yang disajikan dalam soal.</div></div><div class="prompt">${q.prompt}</div>`;
+ if(q.hint)html+=`<div class="hint"><em>${q.hint}</em></div>`;
+ if(q.type==="single"||q.type==="multi"){
+  html+=`<div class="options ${q.type}">`;
+  q.options.forEach((o,i)=>{let sel=answers[current]&&answers[current].includes(i);html+=`<div class="option ${sel?"selected":""}" onclick="chooseOption(${i})"><span class="mark">${sel?(q.type==="single"?String.fromCharCode(65+i):"✓"):(q.type==="single"?String.fromCharCode(65+i):"")}</span><span>${o}</span></div>`});
+  html+="</div>";
+ }else{
+  html+=`<table class="category-table"><thead><tr><th>Pernyataan</th><th class="choice">Benar</th><th class="choice">Salah</th></tr></thead><tbody>`;
+  q.statements.forEach((s,i)=>{let v=answers[current]?answers[current][i]:null;html+=`<tr><td>${String.fromCharCode(65+i)}. ${s}</td><td class="choice"><input type="radio" name="cat${i}" ${v===true?"checked":""} onchange="chooseCategory(${i},true)" aria-label="Benar"></td><td class="choice"><input type="radio" name="cat${i}" ${v===false?"checked":""} onchange="chooseCategory(${i},false)" aria-label="Salah"></td></tr>`});
+  html+="</tbody></table>";
+ }
+ root.innerHTML=html;
+ document.getElementById("doubtBtn").textContent=doubts[current]?"Hapus Ragu-ragu":"Ragu-ragu";
+ document.getElementById("nextBtn").classList.toggle("hidden",current===2);
+ document.getElementById("finishBtn").classList.toggle("hidden",current!==2);
+}
+function chooseOption(i){let q=questions[current];if(q.type==="single")answers[current]=[i];else{let a=answers[current]||[];answers[current]=a.includes(i)?a.filter(x=>x!==i):[...a,i]}renderQuestion();renderNav()}
+function chooseCategory(i,val){if(!answers[current])answers[current]=[null,null,null];answers[current][i]=val;renderNav()}
+function toggleDoubt(){doubts[current]=!doubts[current];renderNav();renderQuestion()}
+function nextQuestion(){if(current<2){current++;renderNav();renderQuestion()}}
+function skipQuestion(){if(current<2){current++;renderNav();renderQuestion()}else{alert("Anda berada pada soal terakhir. Periksa jawaban atau tekan Selesai.")}}
+function finishExam(auto){
+ if(!auto&&!confirm("Apakah Anda yakin ingin menyelesaikan ujian? Jawaban tidak dapat diubah setelah selesai."))return;
+ clearInterval(clockInterval);
+ let correct=0;
+ if(answers[0]&&answers[0].length===1&&answers[0][0]===1)correct++;
+ if(answers[1]&&answers[1].length===2&&answers[1].includes(0)&&answers[1].includes(2))correct++;
+ if(answers[2]&&answers[2].length===3&&answers[2].every((v,i)=>v===questions[2].answer[i]))correct++;
+ const score=(correct*100/3).toFixed(2).replace(".",",");
+ document.getElementById("exam").classList.add("hidden");document.getElementById("result").classList.remove("hidden");
+ document.getElementById("score").textContent=score;
+ document.getElementById("resultName").textContent=person.nama+" • NISN "+person.nisn+(auto?" • Waktu telah habis.":"");
+}
+</script>
+</body>
+</html>
